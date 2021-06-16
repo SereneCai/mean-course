@@ -1,0 +1,7 @@
+<textarea rows="6" [value]="newPost" #postInput></textarea>
+<!--must be wrapped with single'' quote and "" for property 'value' bidding, unless its a declared variable from component-->
+<!--# creates a variable, which acts as the local reference that be used within the template-->
+<hr>
+<button (click)="onAddPost(postInput)">Save Post</button>
+<p>{{newPost}}</p>
+<!--//event bidding-->
