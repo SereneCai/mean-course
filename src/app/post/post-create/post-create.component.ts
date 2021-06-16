@@ -7,10 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostCreateComponent implements OnInit {
   newPost = 'No content';
+  enteredValue ='';
 
-  onAddPost(postInput: HTMLTextAreaElement){
-    this.newPost = postInput.value;
-    console.log(postInput);
+  onAddPost(){
+    this.newPost =this.enteredValue;
     //indicates what output at the html when clicked
     console.log("added");
   }

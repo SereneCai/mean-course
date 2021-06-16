@@ -1,7 +1,9 @@
-<textarea rows="6" [value]="newPost" #postInput></textarea>
-<!--must be wrapped with single'' quote and "" for property 'value' bidding, unless its a declared variable from component-->
-<!--# creates a variable, which acts as the local reference that be used within the template-->
-<hr>
-<button (click)="onAddPost(postInput)">Save Post</button>
-<p>{{newPost}}</p>
+<mat-card>
+<mat-form-field>
+<textarea matInput rows="6" [(ngModel)]="enteredValue"></textarea>
+<!--2-way binding, ngModel listens for input/output-->
 <!--//event bidding-->
+</mat-form-field>
+  <button mat-raised-button color="accent" (click)="onAddPost()">Save Post</button>
+</mat-card>
+<p>{{newPost}}</p>
