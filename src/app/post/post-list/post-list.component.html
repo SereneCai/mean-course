@@ -1,9 +1,9 @@
-<mat-accordion>
-  <mat-expansion-panel>
+<mat-accordion multi="true">
+  <mat-expansion-panel *ngFor="let post of posts">
     <mat-expansion-panel-header>
-    <h1>POST LISTS</h1>
+      {{post.title}}
     </mat-expansion-panel-header>
-
+    {{post.content}}
   </mat-expansion-panel>
 
 </mat-accordion>
