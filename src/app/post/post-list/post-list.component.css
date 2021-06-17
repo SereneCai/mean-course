@@ -1,5 +1,9 @@
 :host{
   display: block;
-  margin-top: 1rem;
+  margin: 1rem auto;
   /*by default, element are not set to block, so for margin etc to work must set display to block*/
+}
+
+.info-text{
+  text-align: center;
 }
