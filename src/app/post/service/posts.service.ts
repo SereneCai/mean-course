@@ -15,13 +15,15 @@ export class PostsService {
     return [...this.posts];
   }
 
-  getPostUpdate(){
-    return this.postsUpdated.asObservable();
-  }
-
   addPost(title: string, content:string){
     const post: Post ={title:title, content:content};
     this.posts.push(post);
     this.postsUpdated.next([...this.posts]);
   }
+  //passing the info into subject(postsUpdated) --> passing/updating this.posts into subject(postsUpdated) with .next()
+
+  getPostUpdate(){
+    return this.postsUpdated.asObservable();
+  }
+  //setting this.postsUpdated as Observable so that we can listen to the private postsUpdated
 }
