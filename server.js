@@ -1,6 +1,8 @@
 const http = require('http'); //a default nodejs package
-const server = http.createServer((req, res)=>{
-  res.end("this is the 1st response");
-})
+const app = require('./backend/app')
 
-server.listen(process.env.PORT || 3000);
+const port = process.env.PORT || 3000;
+app.set('port', port);
+const server = http.createServer(app);
+
+server.listen(port);
