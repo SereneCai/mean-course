@@ -17,7 +17,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   constructor(public postsService: PostsService) { }
 
   ngOnInit() {
-    this.posts = this.postsService.getPosts(); //if post already exist, fetch the initial post
+    this.postsService.getPosts(); //if post already exist, fetch the initial post from backend
     this.postsSub = this.postsService.getPostUpdate() //set a listener/subscriber to the subject/subscription; changes to posts
       .subscribe((posts: Post[]) =>{
         this.posts = posts; //setting posts for display to posts from the subject
