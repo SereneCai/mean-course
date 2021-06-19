@@ -44,7 +44,7 @@ app.get('/api/posts', (req, res, next) => {
       console.log(result);
       //to get data of posts as json at the browser side
       res.status(200).json({
-        message: 'hi it worked.',
+        message: 'Successful getting of data',
         posts: result
       })
     })

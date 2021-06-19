@@ -16,7 +16,7 @@ export class PostsService {
   getPosts(){
     //GET posts data from the url set up at node js, with <{message: string, posts: Post[]}> which identifies the type received
     //subscribe to the posts
-    this.http.get<{message: string, posts: any}>('http://localhost:3000/api/posts')
+    this.http.get<{message: string, posts: any}>('http://localhost:3000/api/posts') //not posts:Post[] because id do not exist
       .pipe(map((postData) =>{
         return postData.posts.map(post =>{
           return{
@@ -25,7 +25,7 @@ export class PostsService {
             id: post._id
           };
         });
-      }))//pipe allows accepts multiple operators we can add
+      }))//pipe accepts multiple operators which we can use. eg. map
       .subscribe((transformedPosts) =>{
         this.posts = transformedPosts; //setting the posts to postData, which is from the backend
         this.postsUpdated.next([...this.posts]); //passing the data into postsUpdated
@@ -37,7 +37,7 @@ export class PostsService {
     this.http.post<{message: string, postId: string}>('http://localhost:3000/api/posts', post) //post as 2nd argument, which the data we want to pass
       .subscribe((responseData) =>{
         const id = responseData.postId;
-        post.id =id;
+        post.id =id; //json send back the postId, and we assign to the post.id for identity
         this.posts.push(post); //storing data locally when server is successful
         this.postsUpdated.next([...this.posts]);
       })
