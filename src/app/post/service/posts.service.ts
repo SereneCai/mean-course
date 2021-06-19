@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable} from "rxjs";
 import {Post} from "../post.model";
 import {HttpClient} from "@angular/common/http";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +16,18 @@ export class PostsService {
   getPosts(){
     //GET posts data from the url set up at node js, with <{message: string, posts: Post[]}> which identifies the type received
     //subscribe to the posts
-    this.http.get<{message: string, posts: Post[]}>('http://localhost:3000/api/posts')
-    .subscribe((postData) =>{
-        this.posts = postData.posts; //setting the posts to postData, which is from the backend
+    this.http.get<{message: string, posts: any}>('http://localhost:3000/api/posts')
+      .pipe(map((postData) =>{
+        return postData.posts.map(post =>{
+          return{
+            title: post.title,
+            content: post.content,
+            id: post._id
+          };
+        });
+      }))//pipe allows accepts multiple operators we can add
+      .subscribe((transformedPosts) =>{
+        this.posts = transformedPosts; //setting the posts to postData, which is from the backend
         this.postsUpdated.next([...this.posts]); //passing the data into postsUpdated
     });
   }
