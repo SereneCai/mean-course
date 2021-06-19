@@ -47,4 +47,12 @@ export class PostsService {
     return this.postsUpdated.asObservable();
   }
   //setting this.postsUpdated as Observable so that we can listen to the private postsUpdated
+
+  deletePost(postId: string){
+    this.http.delete('http://localhost:3000/api/posts/'+ postId)
+      .subscribe(()=>{
+        console.log('deleted post');
+      })
+
+  }
 }
