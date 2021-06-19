@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const Post = require('./model/post');
 
 const app = express();
 
@@ -16,10 +17,14 @@ app.use((req, res, next) =>{
 })
 
 app.post('/api/posts', (req, res, next) =>{
-  const post = req.body; //function of body parser
+  const post = new Post({
+    title:  req.body.title, //function of body parser
+    content: req.body.content,
+  });
+
   console.log(post);
   res.status(201).json({
-    message:"post fetched successfully"
+    message:"post added successfully"
   })
 });
 
