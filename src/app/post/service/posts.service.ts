@@ -13,10 +13,12 @@ export class PostsService {
   constructor(private http: HttpClient) { }
 
   getPosts(){
+    //GET posts data from the url set up at node js, with <{message: string, posts: Post[]}> which identifies the type received
+    //subscribe to the posts
     this.http.get<{message: string, posts: Post[]}>('http://localhost:3000/api/posts')
     .subscribe((postData) =>{
-        this.posts = postData.posts;
-        this.postsUpdated.next([...this.posts]);
+        this.posts = postData.posts; //setting the posts to postData, which is from the backend
+        this.postsUpdated.next([...this.posts]); //passing the data into postsUpdated
     });
   }
 
