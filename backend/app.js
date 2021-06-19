@@ -1,21 +1,29 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
+
+app.use(bodyParser.json()); //return a valid middleware to parse json data
+
 
 app.use((req, res, next) =>{
   //to allow cross server sharing of info, the following headers are added
   //spelling must be correct
   res.setHeader('Access-Control-Allow-Origin', "*");
-  res.setHeader('Access-Control-Allow-Header', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, PUT, OPTIONS');
   next();
 })
 
 app.post('/api/posts', (req, res, next) =>{
-  console.log();
+  const post = req.body; //function of body parser
+  console.log(post);
+  res.status(201).json({
+    message:"post fetched successfully"
+  })
 });
 
-app.use('/api/posts', (req, res, next) => {
+app.get('/api/posts', (req, res, next) => {
   const posts =[
     {
       id: 'asd1234',
