@@ -34,9 +34,10 @@ export class PostsService {
 
   addPost(title: string, content:string){
     const post: Post ={id: null, title:title, content:content};
-    this.http.post<{message: string}>('http://localhost:3000/api/posts', post) //post as 2nd argument, which the data we want to pass
+    this.http.post<{message: string, postId: string}>('http://localhost:3000/api/posts', post) //post as 2nd argument, which the data we want to pass
       .subscribe((responseData) =>{
-        console.log(responseData.message);
+        const id = responseData.postId;
+        post.id =id;
         this.posts.push(post); //storing data locally when server is successful
         this.postsUpdated.next([...this.posts]);
       })

@@ -29,10 +29,13 @@ app.post('/api/posts', (req, res, next) =>{
     title:  req.body.title, //function of body parser
     content: req.body.content
   });
-  post.save();
-  res.status(201).json({
-    message:"post added successfully"
-  })
+  post.save()
+    .then((result)=>{
+      res.status(201).json({
+        message:"post added successfully",
+        postId: result._id //returning this as part of the response
+      })
+    });
 });
 
 app.get('/api/posts', (req, res, next) => {
