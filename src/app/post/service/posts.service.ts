@@ -67,6 +67,7 @@ export class PostsService {
     this.http.put('http://localhost:3000/api/posts/'+ id, post)
       .subscribe((response)=>{
         const updatedPosts = [...this.posts];
+        //line 71 and 72 are not required. program will still run
         const oldPost = updatedPosts.findIndex( p=> p.id === post.id);
         updatedPosts[oldPost] = post;
         this.posts = updatedPosts;
