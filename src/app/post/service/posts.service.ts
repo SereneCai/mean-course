@@ -13,6 +13,7 @@ export class PostsService {
 
   constructor(private http: HttpClient) { }
 
+  //fetch data at reload
   getPosts(){
     //GET posts data from the url set up at node js, with <{message: string, posts: Post[]}> which identifies the type received
     //subscribe to the posts
@@ -62,6 +63,7 @@ export class PostsService {
       return this.http.get<{_id: string, title: string, content: string}>('http://localhost:3000/api/posts/'+ id);
   }
 
+  //to update when there are changes, dynamically
   updatePost(id: string, title: string, content: string){
     const post: Post = {id: id, title: title, content: content};
     this.http.put('http://localhost:3000/api/posts/'+ id, post)
