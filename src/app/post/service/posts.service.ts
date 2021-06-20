@@ -45,10 +45,11 @@ export class PostsService {
   }
   //passing the info into subject(postsUpdated) --> passing/updating this.posts into subject(postsUpdated) with .next()
 
+  //setting this.postsUpdated as Observable so that we can listen to the private postsUpdated
+  //all changes are pass to postUpdated, and subscribed to by other functions to actively update
   getPostUpdate(){
     return this.postsUpdated.asObservable();
   }
-  //setting this.postsUpdated as Observable so that we can listen to the private postsUpdated
 
   deletePost(postId: string){
     this.http.delete('http://localhost:3000/api/posts/'+ postId)
