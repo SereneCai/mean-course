@@ -56,6 +56,20 @@ export class PostsService {
         this.posts = updatedPosts;
         this.postsUpdated.next([...updatedPosts]);
       })
+  }
 
+  getOnePost(id: string){
+      return {...this.posts.find(p => p.id === id)};
+      //spread operator to pull the object and create a new copy
+      //fetch object from postservice using find
+      //loop through the object using id, and if it is true (the id is found within p.id), it is returned as an argument
+  }
+
+  updatePost(id: string, title: string, content: string){
+    const post: Post = {id: id, title: title, content: content};
+    this.http.put('http://localhost:3000/api/posts/'+ id, post)
+      .subscribe((response)=>{
+        console.log(response);
+      })
   }
 }
