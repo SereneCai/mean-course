@@ -41,7 +41,6 @@ app.post('/api/posts', (req, res, next) =>{
 app.get('/api/posts', (req, res, next) => {
   Post.find()
     .then((result)=>{
-      console.log(result);
       //to get data of posts as json at the browser side
       res.status(200).json({
         message: 'Successful getting of data',
