@@ -5,6 +5,9 @@
       <input matInput type="text" name="title" [ngModel]="post?.title" required #title=ngModel placeholder="Post Title">
       <mat-error *ngIf="title.invalid">Please fill in.</mat-error>
     </mat-form-field>
+    <div>
+      <button mat-raised-button color="accent" type="button">Upload Picture</button>
+    </div>
     <mat-form-field>
       <textarea matInput rows="6" name="content" [ngModel]="post?.content" required #content=ngModel placeholder="Post Content"></textarea>
       <mat-error *ngIf="content.invalid">Please fill in.</mat-error>

@@ -17,13 +17,13 @@ export class PostCreateComponent implements OnInit {
   private mode = 'create';
   private postId: string;
 
-
-  //output turns the component in something that can listen to the outside
+  //output turns the component into something that can listen to the outside
 
   onSavePost(form: NgForm){
     if(form.invalid){
       return;
     }
+    this.isLoading= true ;
     if (this.mode === 'create'){
       this.postsService.addPost(form.value.title,form.value.content);
     } else {

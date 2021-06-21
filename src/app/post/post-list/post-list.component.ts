@@ -14,13 +14,16 @@ export class PostListComponent implements OnInit, OnDestroy {
   //or can use the word public in constructor --> constructor(public postsService: PostsService), then no need to declare
   // postsService: PostsService
   private postsSub: Subscription;
+  isLoading= false;
 
   constructor(public postsService: PostsService) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.postsService.getPosts(); //if post already exist, fetch the initial post from backend
     this.postsSub = this.postsService.getPostUpdate() //set a listener/subscriber to the subject/subscription; changes to posts
       .subscribe((posts: Post[]) =>{
+        this.isLoading =false;
         this.posts = posts; //setting posts for display to posts from the subject
       });
   }
