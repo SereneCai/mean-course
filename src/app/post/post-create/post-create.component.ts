@@ -28,7 +28,6 @@ export class PostCreateComponent implements OnInit {
       this.postsService.updatePost(this.postId, form.value.title,form.value.content);
     }
     form.resetForm(); //clears the form after submission
-
   }
 
   constructor(public postsService: PostsService, public route: ActivatedRoute) { }

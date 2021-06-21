@@ -3,6 +3,7 @@ import { Subject, Observable} from "rxjs";
 import {Post} from "../post.model";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class PostsService {
   private posts: Post[] =[];
   private postsUpdated  = new Subject<Post[]>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   //fetch data at reload at the main page
   getPosts(){
@@ -41,6 +42,7 @@ export class PostsService {
         post.id =id; //json send back the postId, and we assign to the post.id for identity
         this.posts.push(post); //storing data locally when server is successful
         this.postsUpdated.next([...this.posts]);
+        this.router.navigate(['/']);
       })
   }
   //passing the info into subject(postsUpdated) --> passing/updating this.posts into subject(postsUpdated) with .next()
@@ -75,6 +77,7 @@ export class PostsService {
         updatedPosts[oldPost] = post;
         this.posts = updatedPosts;
         this.postsUpdated.next([...this.posts]);
-      })
+        this.router.navigate(['/']);
+      }) //this.router.navigate([]); --> [] used because we need to pass an array of segments
   }
 }
