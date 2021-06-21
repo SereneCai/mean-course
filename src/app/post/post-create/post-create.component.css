@@ -6,6 +6,6 @@ mat-spinner{
   margin: auto;
 }
 
-input{
+.hide-file{
   visibility: hidden;
 }
