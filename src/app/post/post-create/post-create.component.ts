@@ -42,7 +42,7 @@ export class PostCreateComponent implements OnInit {
         this.postsService.getOnePost(this.postId)
           .subscribe(postData =>{
             this.post ={id: postData._id, title: postData.title, content: postData.content}
-          })
+          })   //this is to fetch the content from db and set on the page
       } else{
         this.mode ='create';
         this.post = null;

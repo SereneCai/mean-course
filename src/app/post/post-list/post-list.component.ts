@@ -12,6 +12,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   posts: Post[] =[];
   //or can use the word public in constructor --> constructor(public postsService: PostsService), then no need to declare
+  // postsService: PostsService
   private postsSub: Subscription;
 
   constructor(public postsService: PostsService) { }
