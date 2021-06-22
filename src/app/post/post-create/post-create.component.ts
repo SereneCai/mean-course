@@ -20,6 +20,17 @@ export class PostCreateComponent implements OnInit {
 
   //output turns the component into something that can listen to the outside
 
+  onImagePicked(event: Event){
+    const file = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({image: file}); //target a single control
+    //not limted to just storing text, but img as well
+    this.form.get('image').updateValueAndValidity();
+    //reach out to form and get the image
+    //informs angular you changed the value and that it should re-evaluate and store the value internally, and check if it is valid
+  console.log(file);
+  console.log(this.form);
+  }
+
   onSavePost(){
     //no longer an arguement.
     //remove form: NgForm from onSavePost
@@ -47,6 +58,7 @@ export class PostCreateComponent implements OnInit {
       //beginning form state (null = empty input),
       // validators/form ctrl options(js object)
       'content': new FormControl(null, {validators: [Validators.required]}),
+      image: new FormControl(null, {validators: [Validators.required]}),
     });
     //set to null for new post
     //paramMap is an observable
