@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {FormsModule} from "@angular/forms";
+import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 
 import { AppRoutingModule } from './app-routing.module';
@@ -29,7 +30,8 @@ import { PostListComponent } from './post/post-list/post-list.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
+    // FormsModule, //unlocked template driven approach
+    ReactiveFormsModule, //unlocks the reactive driven form approach
     BrowserAnimationsModule,
     MatInputModule,
     MatCardModule,

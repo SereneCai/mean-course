@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import {Post} from '../post.model';
-import {NgForm} from "@angular/forms";
+import {FormGroup, NgForm} from "@angular/forms";
 import {PostsService} from "../service/posts.service";
 import {ActivatedRoute, ParamMap} from "@angular/router";
 
@@ -14,6 +14,7 @@ export class PostCreateComponent implements OnInit {
   enteredTitle ='';
   post: Post;
   isLoading= false;
+  form: FormGroup; //groups all control of the form
   private mode = 'create';
   private postId: string;
 
@@ -35,6 +36,9 @@ export class PostCreateComponent implements OnInit {
   constructor(public postsService: PostsService, public route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.form = new FormGroup({
+      title
+    });
     //paramMap is an observable
     this.route.paramMap.subscribe((paramMap: ParamMap)=>{
       if(paramMap.has('postId')){
