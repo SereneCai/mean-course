@@ -23,7 +23,7 @@ export class PostCreateComponent implements OnInit {
   onImagePicked(event: Event){
     const file = (event.target as HTMLInputElement).files[0];
     this.form.patchValue({image: file}); //target a single control
-    //not limted to just storing text, but img as well
+    //not limited to just storing text, but img as well
     this.form.get('image').updateValueAndValidity();
     //reach out to form and get the image
     //informs angular you changed the value and that it should re-evaluate and store the value internally, and check if it is valid
