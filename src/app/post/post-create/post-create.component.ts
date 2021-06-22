@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import {Post} from '../post.model';
-import {FormGroup, NgForm} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {PostsService} from "../service/posts.service";
 import {ActivatedRoute, ParamMap} from "@angular/router";
 
@@ -20,25 +20,35 @@ export class PostCreateComponent implements OnInit {
 
   //output turns the component into something that can listen to the outside
 
-  onSavePost(form: NgForm){
-    if(form.invalid){
+  onSavePost(){
+    //no longer an arguement.
+    //remove form: NgForm from onSavePost
+    //add this. to the form
+    if(this.form.invalid){
       return;
     }
     this.isLoading = true ;
     if (this.mode === 'create'){
-      this.postsService.addPost(form.value.title,form.value.content);
+      this.postsService.addPost(this.form.value.title, this.form.value.content);
     } else {
-      this.postsService.updatePost(this.postId, form.value.title,form.value.content);
+      this.postsService.updatePost(this.postId, this.form.value.title, this.form.value.content);
     }
-    form.resetForm(); //clears the form after submission
+    this.form.reset(); //clears the form after submission
+    //for template, resetForm();
+    // for reactive, reset();
   }
 
   constructor(public postsService: PostsService, public route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      title
+      'title' : new FormControl(null,
+        {validators: [Validators.required, Validators.minLength(3)]},),
+      //beginning form state (null = empty input),
+      // validators/form ctrl options(js object)
+      'content': new FormControl(null, {validators: [Validators.required]}),
     });
+    //set to null for new post
     //paramMap is an observable
     this.route.paramMap.subscribe((paramMap: ParamMap)=>{
       if(paramMap.has('postId')){
@@ -49,7 +59,11 @@ export class PostCreateComponent implements OnInit {
           .subscribe(postData =>{
             this.isLoading= false ;
             this.post ={id: postData._id, title: postData.title, content: postData.content}
-          })   //this is to fetch the content from db and set on the page
+            this.form.setValue({'title': this.post.title, 'content': this.post.content});
+            //allows you to override the values for form control at the top in case you want to edit the form
+          });
+        //this is to fetch the content from db and set on the page
+
       } else{
         this.mode ='create';
         this.post = null;
