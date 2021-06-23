@@ -1,6 +1,7 @@
 //getting the value of the control, in this case, a file
 //read using file reader
 //checking for the mime type of the file
+//using self-created observable
 
 import {AbstractControl} from "@angular/forms";
 import {Observable, Observer, of} from "rxjs";
@@ -46,5 +47,5 @@ export const mimeType = (control: AbstractControl) : Promise<{[key: string]: any
 
     fileReader.readAsArrayBuffer(file);
   })
-
+  return fileReaderObs;
 };

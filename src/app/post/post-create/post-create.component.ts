@@ -3,6 +3,7 @@ import {Post} from '../post.model';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {PostsService} from "../service/posts.service";
 import {ActivatedRoute, ParamMap} from "@angular/router";
+import {mimeType} from './mime-type.validator'; //validators are function
 
 @Component({
   selector: 'app-post-create',
@@ -63,7 +64,7 @@ export class PostCreateComponent implements OnInit {
       //beginning form state (null = empty input),
       // validators/form ctrl options(js object)
       'content': new FormControl(null, {validators: [Validators.required]}),
-      image: new FormControl(null, {validators: [Validators.required]}),
+      image: new FormControl(null, {validators: [Validators.required], asyncValidators: [mimeType]}),
     });
     //set to null for new post
     //paramMap is an observable
