@@ -34,19 +34,21 @@ export class PostsService {
     });
   }
 
-  addPost(title: string, content:string){
-    const post: Post ={id: null, title:title, content:content};
-    this.http.post<{message: string, postId: string}>('http://localhost:3000/api/posts', post) //post as 2nd argument, which the data we want to pass
+  addPost(title: string, content:string, image: File){
+   const postData = new FormData(); //allow combination of text values and blobs(file values)
+    postData.append("title", title );
+    postData.append("content", content);
+    postData.append("image", image, title ); //3rd arg is the file name provided to the backend
+    this.http.post<{message: string, postId: string}>('http://localhost:3000/api/posts', postData)
+      //post as 2nd argument, which the data we want to pass
       .subscribe((responseData) =>{
-        const id = responseData.postId;
-        post.id =id; //json send back the postId, and we assign to the post.id for identity
+        const post: Post ={id: responseData.postId, title: title, content: content};
         this.posts.push(post); //storing data locally when server is successful
         this.postsUpdated.next([...this.posts]);
         this.router.navigate(['/']);
       })
   }
   //passing the info into subject(postsUpdated) --> passing/updating this.posts into subject(postsUpdated) with .next()
-
   //setting this.postsUpdated as Observable so that we can listen to the private postsUpdated
   //all changes are pass to postUpdated, and subscribed to by other functions to actively update
   getPostUpdate(){

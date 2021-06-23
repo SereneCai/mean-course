@@ -20,43 +20,6 @@ export class PostCreateComponent implements OnInit {
   private mode = 'create';
   private postId: string;
 
-  //output turns the component into something that can listen to the outside
-
-  onImagePicked(event: Event){
-    const file = (event.target as HTMLInputElement).files[0];
-    this.form.patchValue({image: file}); //target a single control
-    //not limited to just storing text, but img as well
-    this.form.get('image').updateValueAndValidity();
-    //reach out to form and get the image
-    //informs angular you changed the value and that it should re-evaluate and store the value internally, and check if it is valid
-    const reader = new FileReader(); //javascript function,  //create reader
-    reader.onload =()=>{
-      this.imagePreview = reader.result as string; //typescript function. using reader.result may not work
-      //defining what should happen after it is done reading a file
-    };
-    reader.readAsDataURL(file); //instruct to load the file
-  }
-
-  onSavePost(){
-    //no longer an arguement.
-    //remove form: NgForm from onSavePost
-    //add this. to the form
-    if(this.form.invalid){
-      return;
-    }
-    this.isLoading = true ;
-    if (this.mode === 'create'){
-      this.postsService.addPost(this.form.value.title, this.form.value.content);
-    } else {
-      this.postsService.updatePost(this.postId, this.form.value.title, this.form.value.content);
-    }
-    this.form.reset(); //clears the form after submission
-    //for template, resetForm();
-    // for reactive, reset();
-  }
-
-  constructor(public postsService: PostsService, public route: ActivatedRoute) { }
-
   ngOnInit(): void {
     this.form = new FormGroup({
       'title' : new FormControl(null,
@@ -89,5 +52,41 @@ export class PostCreateComponent implements OnInit {
     });
 
   }
+
+  //output turns the component into something that can listen to the outside
+
+  onImagePicked(event: Event){
+    const file = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({image: file}); //target a single control
+    //not limited to just storing text, but img as well
+    this.form.get("image").updateValueAndValidity();
+    //reach out to form and get the image
+    //informs angular you changed the value and that it should re-evaluate and store the value internally, and check if it is valid
+    const reader = new FileReader(); //javascript function,  //create reader
+    reader.onload =()=>{
+      this.imagePreview = reader.result as string; //typescript function. using reader.result may not work
+      //defining what should happen after it is done reading a file
+    };
+    reader.readAsDataURL(file); //instruct to load the file
+  }
+
+  onSavePost(){
+    //no longer an arguement.
+    //remove form: NgForm from onSavePost
+    //add this. to the form
+    if(this.form.invalid){
+      return;
+    }
+    this.isLoading = true ;
+    if (this.mode === 'create'){
+      this.postsService.addPost(this.form.value.title, this.form.value.content, this.form.value.image);
+    } else {
+      this.postsService.updatePost(this.postId, this.form.value.title, this.form.value.content);
+    }
+    this.form.reset(); //clears the form after submission
+    //for template, resetForm();
+    // for reactive, reset();
+  }
+  constructor(public postsService: PostsService, public route: ActivatedRoute) { }
 
 }
