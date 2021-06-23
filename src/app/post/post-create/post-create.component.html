@@ -10,6 +10,9 @@
       <button mat-stroked-button color="accent" type="button" (click)="filePicker.click()">Upload Picture</button>
       <input class ="hide-file" type="file" #filePicker (change)="onImagePicked($event)">
     </div>
+    <div class="image-preview">
+      <img src="" [alt]="form.value.title">
+    </div>
     <mat-form-field>
       <textarea matInput rows="6" formControlName="content" name="content" placeholder="Post Content"></textarea>
       <mat-error *ngIf="form.get('content').invalid">Please fill in.</mat-error>

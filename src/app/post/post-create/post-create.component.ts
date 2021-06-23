@@ -15,6 +15,7 @@ export class PostCreateComponent implements OnInit {
   post: Post;
   isLoading= false;
   form: FormGroup; //groups all control of the form
+  imagePreview: string;
   private mode = 'create';
   private postId: string;
 
@@ -27,8 +28,12 @@ export class PostCreateComponent implements OnInit {
     this.form.get('image').updateValueAndValidity();
     //reach out to form and get the image
     //informs angular you changed the value and that it should re-evaluate and store the value internally, and check if it is valid
-  console.log(file);
-  console.log(this.form);
+    const reader = new FileReader(); //javascript function,  //create reader
+    reader.onload =()=>{
+      this.imagePreview = reader.result as string; //typescript function. using reader.result may not work
+      //defining what should happen after it is done reading a file
+    };
+    reader.readAsDataURL(file); //instruct to load the file
   }
 
   onSavePost(){
