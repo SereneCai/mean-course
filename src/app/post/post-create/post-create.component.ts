@@ -39,7 +39,7 @@ export class PostCreateComponent implements OnInit {
         this.postsService.getOnePost(this.postId)
           .subscribe(postData =>{
             this.isLoading= false ;
-            this.post ={id: postData._id, title: postData.title, content: postData.content, imagePath: null}
+            this.post ={id: postData._id, title: postData.title, content: postData.content, imagePath: postData.imagePath}
             this.form.setValue({'title': this.post.title, 'content': this.post.content, image: this.post.imagePath});
             //allows you to override the values for form control at the top in case you want to edit the form
           });
@@ -81,7 +81,7 @@ export class PostCreateComponent implements OnInit {
     if (this.mode === 'create'){
       this.postsService.addPost(this.form.value.title, this.form.value.content, this.form.value.image);
     } else {
-      this.postsService.updatePost(this.postId, this.form.value.title, this.form.value.content);
+      this.postsService.updatePost(this.postId, this.form.value.title, this.form.value.content, this.form.value.image);
     }
     this.form.reset(); //clears the form after submission
     //for template, resetForm();
