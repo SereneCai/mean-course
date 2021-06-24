@@ -39,7 +39,7 @@ export class PostCreateComponent implements OnInit {
         this.postsService.getOnePost(this.postId)
           .subscribe(postData =>{
             this.isLoading= false ;
-            this.post ={id: postData._id, title: postData.title, content: postData.content}
+            this.post ={id: postData._id, title: postData.title, content: postData.content, imagePath: null}
             this.form.setValue({'title': this.post.title, 'content': this.post.content});
             //allows you to override the values for form control at the top in case you want to edit the form
           });
