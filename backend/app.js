@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const PostRoutes = require('./routes/posts');
+const path = require('path');
 
 const app = express();
 
@@ -14,6 +15,8 @@ mongoose.connect('mongodb+srv://user_1:tester1234@blogtest.kidjf.mongodb.net/nod
   });
 
 app.use(bodyParser.json()); //return a valid middleware to parse json data
+app.use(bodyParser.urlencoded({extended: false}));
+app.use("/images", express.static(path.join("backend/images"))); //giving allowance, and pointing using path property from express
 
 app.use((req, res, next) =>{
   //to allow cross server sharing of info, the following headers are added
