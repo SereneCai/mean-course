@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
   //destination -- a function that will be executed when try to save a file
   destination: (req, file, cb) =>{
     const isValid = MIME_TYPE_MAP[file.mimetype]; //checking for validity of the file type
-    let error = new Error("Invalid image type");
+    let error = new Error("Invalid image type"); //mimetype is a multer function
     if(isValid){
       error = null;
     }
