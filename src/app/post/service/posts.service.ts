@@ -39,7 +39,7 @@ export class PostsService {
     postData.append("title", title );
     postData.append("content", content);
     postData.append("image", image, title ); //3rd arg is the file name provided to the backend
-    this.http.post<{message: string, postId: string}>('http://localhost:3000/api/posts', postData)
+    this.http.post<{message: string, post: Post}>('http://localhost:3000/api/posts', postData)
       //post as 2nd argument, which the data we want to pass
       .subscribe((responseData) =>{
         const post: Post ={id: responseData.postId, title: title, content: content};

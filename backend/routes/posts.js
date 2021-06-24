@@ -29,15 +29,22 @@ const storage = multer.diskStorage({
 //single refers to a single file
 //execution happens from right to left, thus can pass in more than 1 paramemter to be checked
 router.post("", multer({storage: storage}).single("image"), (req, res, next) =>{
+  const url = req.protocol + '://' + req.get("host");
   const post = new Post({
     title:  req.body.title, //function of body parser
-    content: req.body.content
+    content: req.body.content,
+    imagePath: url + '/images/' + req.file.filename, //the url path for image. file is a multer property
   });
   post.save()
     .then((result)=>{
       res.status(201).json({
         message:"post added successfully",
-        postId: result._id //returning this as part of the response
+       post:{ //can use ...result to auto populate with id: result._id to set id
+          id: result._id,
+          title: result.title,
+          content: result.content,
+          imagePath: result.imagePath,
+       }
       })
     });
 });
