@@ -18,13 +18,15 @@ export class PostListComponent implements OnInit, OnDestroy {
   totalPosts = 10; //for the post length
   postsPerPage = 2; //how many displayed
   pageSizeOptions = [1,2,5,10]; //choose how many posts to display
+  currentPage = 1; //initial value of the current page
   isLoading= false;
 
   constructor(public postsService: PostsService) { }
 
   ngOnInit() {
     this.isLoading = true;
-    this.postsService.getPosts(); //if post already exist, fetch the initial post from backend
+    this.postsService.getPosts(this.postsPerPage, this.currentPage); //if post already exist, fetch the initial post from backend
+    //send postsPerPage, and 1 as the currentPage for argument
     this.postsSub = this.postsService.getPostUpdate() //set a listener/subscriber to the subject/subscription; changes to posts
       .subscribe((posts: Post[]) =>{
         this.isLoading =false;
@@ -33,7 +35,9 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   onChangedPage(pageData: PageEvent){
-    console.log(pageData);
+    this.currentPage = pageData.pageIndex + 1; //pageIndex starts at 0, but backend starts at 1
+    this.postsPerPage = pageData.pageSize; //as selected by user at the dropdown
+    this.postsService.getPosts(this.postsPerPage, this.currentPage);
   }
 
   onDelete(postId: string){

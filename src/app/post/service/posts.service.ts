@@ -15,10 +15,11 @@ export class PostsService {
   constructor(private http: HttpClient, private router: Router) { }
 
   //fetch data at reload at the main page
-  getPosts(){
+  getPosts(postsPerPage: number, currentPage: number){
     //GET posts data from the url set up at node js, with <{message: string, posts: Post[]}> which identifies the type received
     //subscribe to the posts
-    this.http.get<{message: string, posts: any}>('http://localhost:3000/api/posts') //not posts:Post[] because id is wrong
+    const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
+    this.http.get<{message: string, posts: any}>('http://localhost:3000/api/posts' + queryParams) //not posts:Post[] because id is wrong
       .pipe(map((postData) =>{
         return postData.posts.map(post =>{
           return{
