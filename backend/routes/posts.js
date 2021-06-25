@@ -50,7 +50,17 @@ router.post("", multer({storage: storage}).single("image"), (req, res, next) =>{
 });
 
 router.get('', (req, res, next) => {
-  Post.find()
+  const pageSize = +req.query.pagesize; //anything from url is a string, and limit() only works with numbers
+  const currentPage = +req.query.page; //adding a + in front changes them to number
+  const postQuery = Post.find();
+  if(pageSize && currentPage){
+    postQuery
+      .skip(pageSize * (currentPage - 1)) //will not retrieve all data. the formula is for skipping items from previus page
+      .limit(pageSize); // limit how many items it returns
+      //still execute query on all elements of db
+      //this could be inefficient if the the db is huge
+  }
+  postQuery.find()
     .then((result)=>{
       //to get data of posts as json at the browser side
       res.status(200).json({
@@ -58,7 +68,6 @@ router.get('', (req, res, next) => {
         posts: result
       })
     })
-
 });
 
 router.get('/:id', (req, res, next)=>{
@@ -75,7 +84,6 @@ router.get('/:id', (req, res, next)=>{
 })
 
 router.put('/:id', multer({storage: storage}).single("image"), (req, res, next) =>{
-  console.log(req.file);
   const post = new Post ({
     _id: req.body.id,
     title: req.body.title,
