@@ -59,6 +59,7 @@ router.get('', (req, res, next) => {
       .limit(pageSize); // limit how many items it returns
       //still execute query on all elements of db
       //this could be inefficient if the the db is huge
+    //will reflect in localhost:3000/api/posts with query parameters
   }
   postQuery.find()
     .then((result)=>{
