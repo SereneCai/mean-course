@@ -19,7 +19,6 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 
 import { HeaderComponent } from './header/header.component';
 import { PostListComponent } from './post/post-list/post-list.component';
-import { AuthComponent } from './login/auth/auth.component';
 import { LoginComponent } from './auth/login/login.component';
 
 @NgModule({
@@ -28,14 +27,13 @@ import { LoginComponent } from './auth/login/login.component';
     PostCreateComponent,
     HeaderComponent,
     PostListComponent,
-    AuthComponent,
     LoginComponent,
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    // FormsModule, //unlocked template driven approach
+    FormsModule, //unlocked template driven approach
     ReactiveFormsModule, //unlocks the reactive driven form approach
     BrowserAnimationsModule,
     MatInputModule,
