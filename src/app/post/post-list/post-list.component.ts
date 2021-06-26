@@ -15,7 +15,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   //or can use the word public in constructor --> constructor(public postsService: PostsService), then no need to declare
   // postsService: PostsService
   private postsSub: Subscription;
-  totalPosts = 10; //for the post length
+  totalPosts = 0; //for the post length
   postsPerPage = 2; //how many displayed
   pageSizeOptions = [1,2,5,10]; //choose how many posts to display
   currentPage = 1; //initial value of the current page
@@ -28,9 +28,10 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postsService.getPosts(this.postsPerPage, this.currentPage); //if post already exist, fetch the initial post from backend
     //send postsPerPage, and 1 as the currentPage for argument
     this.postsSub = this.postsService.getPostUpdate() //set a listener/subscriber to the subject/subscription; changes to posts
-      .subscribe((posts: Post[]) =>{
+      .subscribe((postData:{ posts: Post[], postCount: number}) =>{
         this.isLoading =false;
-        this.posts = posts; //setting posts for display to posts from the subject
+        this.totalPosts = postData.postCount;
+        this.posts = postData.posts; //setting posts for display to posts from the subject
       });
   }
 
@@ -42,7 +43,9 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   onDelete(postId: string){
-    this.postsService.deletePost(postId);
+    this.postsService.deletePost(postId).subscribe(()=>{
+      this.postsService.getPosts(this.postsPerPage, this.currentPage);
+    })
   }
 
   ngOnDestroy(){
