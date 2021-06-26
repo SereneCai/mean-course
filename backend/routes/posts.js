@@ -53,6 +53,7 @@ router.get('', (req, res, next) => {
   const pageSize = +req.query.pagesize; //anything from url is a string, and limit() only works with numbers
   const currentPage = +req.query.page; //adding a + in front changes them to number
   const postQuery = Post.find();
+  let fetchedPosts;
   if(pageSize && currentPage){
     postQuery
       .skip(pageSize * (currentPage - 1)) //will not retrieve all data. the formula is for skipping items from previus page
@@ -61,14 +62,19 @@ router.get('', (req, res, next) => {
       //this could be inefficient if the the db is huge
     //will reflect in localhost:3000/api/posts with query parameters
   }
-  postQuery.find()
+  postQuery
     .then((result)=>{
+      fetchedPosts = result;
       //to get data of posts as json at the browser side
+      return Post.count();
+      })
+    .then(count =>{
       res.status(200).json({
         message: 'Successful getting of data',
-        posts: result
-      })
-    })
+        posts: fetchedPosts,
+        maxPosts: count //the number of total post in db
+      });
+    });
 });
 
 router.get('/:id', (req, res, next)=>{
