@@ -19,6 +19,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 
 import { HeaderComponent } from './header/header.component';
 import { PostListComponent } from './post/post-list/post-list.component';
+import { AuthComponent } from './login/auth/auth.component';
+import { LoginComponent } from './auth/login/login.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { PostListComponent } from './post/post-list/post-list.component';
     PostCreateComponent,
     HeaderComponent,
     PostListComponent,
+    AuthComponent,
+    LoginComponent,
 
   ],
   imports: [
