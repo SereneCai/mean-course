@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
 })
 export class PostsService {
   private posts: Post[] =[];
-  private postsUpdated  = new Subject<Post[]>();
+  private postsUpdated  = new Subject<posts: Post[], postCount: number>();
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -19,20 +19,23 @@ export class PostsService {
     //GET posts data from the url set up at node js, with <{message: string, posts: Post[]}> which identifies the type received
     //subscribe to the posts
     const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
-    this.http.get<{message: string, posts: any}>('http://localhost:3000/api/posts' + queryParams) //not posts:Post[] because id is wrong
+    this.http
+      .get<{message: string, posts: any, maxPosts: number}>('http://localhost:3000/api/posts' + queryParams) //not posts:Post[] because id is wrong
       .pipe(map((postData) =>{
-        return postData.posts.map(post =>{
-          return{
-            title: post.title,
-            content: post.content,
-            id: post._id,
-            imagePath: post.imagePath,
-          };
-        });
+        return {
+          posts: postData.posts.map(post => {
+            return {
+              title: post.title,
+              content: post.content,
+              id: post._id,
+              imagePath: post.imagePath,
+            };
+          }), maxPosts: postData.maxPosts;
+        };
       }))//pipe accepts multiple operators which we can use. eg. map, which creates a new array with the elements
-      .subscribe((transformedPosts) =>{
-        this.posts = transformedPosts; //setting the posts to postData, which is from the backend
-        this.postsUpdated.next([...this.posts]); //passing the data into postsUpdated
+      .subscribe((transformedPostsData) =>{
+        this.posts = transformedPostsData.posts; //setting the posts to postData, which is from the backend
+        this.postsUpdated.next({posts: [...this.posts], postCount: transformedPostsData.maxPosts}); //passing the data into postsUpdated
     });
   }
 
