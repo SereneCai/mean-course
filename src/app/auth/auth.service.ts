@@ -26,7 +26,6 @@ export class AuthService {
     const authData: AuthData = {email: email, password: password};
     this.http.post<{token: string}>("http://localhost:3000/api/users/login", authData)
       .subscribe(response=>{
-        console.log(response);
         const token = response.token; //send as json from backend from user routes
         this.token = token;
       })
