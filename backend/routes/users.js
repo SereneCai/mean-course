@@ -43,10 +43,13 @@ router.post('/login', (req, res, next) =>{
           message: "Authentication failed"
         });
       }
+      //will be executed once the password matches
       const token = jwt.sign({email: user.email, userId: user._id},
         'secret_should_be_longer',
         {expiresIn: "1h"});
-      //js object passing, secret key we are use, (optional)expires
+      //js object{info from db} which will be used to generate the jwt, secret key/password to create the hash
+      // (optional)expiresIn determines how long the token will last
+      //for security as the token is stored at the frontend
     })
     .catch(err =>{
       return res.status(401).json({
@@ -55,7 +58,5 @@ router.post('/login', (req, res, next) =>{
     })
 
 })
-
-
 
 module.exports = router;
