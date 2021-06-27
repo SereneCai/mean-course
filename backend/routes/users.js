@@ -27,6 +27,7 @@ router.post("/signup", (req, res, next)=> {
 });
 
 router.post('/login', (req, res, next) =>{
+  let fetchedUser;
   User.findOne({email: req.body.email})
     .then(user=>{
         if(!user){
@@ -34,6 +35,7 @@ router.post('/login', (req, res, next) =>{
             message: "User not found"
           });
         }
+      fetchedUser = user;
        return bcrypt.compare(req.body.password, user.password) //to compare the password between input and db
     })
     .then(result =>{
@@ -44,7 +46,7 @@ router.post('/login', (req, res, next) =>{
         //return used as we dont want it to continue execution if !result
       }
       //will be executed once the password matches
-      const token = jwt.sign({email: user.email, userId: user._id},
+      const token = jwt.sign({email: fetchedUser.email, userId: fetchedUser._id},
         'secret_should_be_longer',
         {expiresIn: "1h"});
       //js object{info from db} which will be used to generate the jwt, secret key/password to create the hash
