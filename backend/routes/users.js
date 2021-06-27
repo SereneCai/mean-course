@@ -24,7 +24,6 @@ router.post("/signup", (req, res, next)=> {
           });
         })
     })
-
 });
 
 router.post('/login', (req, res, next) =>{
@@ -42,6 +41,7 @@ router.post('/login', (req, res, next) =>{
         return res.status(401).json({
           message: "Authentication failed"
         });
+        //return used as we dont want it to continue execution if !result
       }
       //will be executed once the password matches
       const token = jwt.sign({email: user.email, userId: user._id},
@@ -50,13 +50,15 @@ router.post('/login', (req, res, next) =>{
       //js object{info from db} which will be used to generate the jwt, secret key/password to create the hash
       // (optional)expiresIn determines how long the token will last
       //for security as the token is stored at the frontend
+      res.status(200).json({
+        token: token
+      }); //requires no return statement as there is no code after this block if its a successful execution
     })
     .catch(err =>{
       return res.status(401).json({
         message: "User not found"
       });
     })
-
 })
 
 module.exports = router;
