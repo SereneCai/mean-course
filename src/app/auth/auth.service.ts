@@ -11,11 +11,16 @@ export class AuthService {
   private authStatusListener = new Subject<boolean>();
   //to be able to let component interested to know about the status of the user
   //boolean as we only want to know login or not
+  private isAuthenticated = false;
 
   constructor(private http: HttpClient) { }
 
   getToken(){
       return this.token;
+  }
+
+  getIsAuthenticated(){
+    return this.isAuthenticated;
   }
 
   getAuthStatusListener(){
@@ -36,7 +41,10 @@ export class AuthService {
       .subscribe(response=>{
         const token = response.token; //send as json from backend from user routes
         this.token = token;
-        this.authStatusListener.next(true); //to pass info that the user is authenticated
+        if(token){
+          this.isAuthenticated = true;
+          this.authStatusListener.next(true); //to pass info that the user is authenticated
+        }
       })
   }
 }
