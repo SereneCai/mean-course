@@ -37,6 +37,8 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.posts = postData.posts; //setting posts for display to posts from the subject
       });
     this.userAuthenticated = this.authService.getIsAuthenticated();
+    //because page will only load after authentication, so this line will help load the page to make sure delete/edit is displayed
+    //subscribe are all async/promises**
     this.authStatusSubs =this.authService.getAuthStatusListener()
       .subscribe(isAuthenticated =>{
           this.userAuthenticated = isAuthenticated;

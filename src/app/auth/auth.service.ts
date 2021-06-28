@@ -41,7 +41,7 @@ export class AuthService {
       .subscribe(response=>{
         const token = response.token; //send as json from backend from user routes
         this.token = token;
-        if(token){
+        if(token){ //checking validity of token
           this.isAuthenticated = true;
           this.authStatusListener.next(true); //to pass info that the user is authenticated
         }
