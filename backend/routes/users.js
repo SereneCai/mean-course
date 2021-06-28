@@ -53,7 +53,8 @@ router.post('/login', (req, res, next) =>{
       // (optional)expiresIn determines how long the token will last
       //for security as the token is stored at the frontend
       res.status(200).json({
-        token: token
+        token: token,
+        expiresIn: 3600
       }); //requires no return statement as there is no code after this block if its a successful execution
     })
     .catch(err =>{
