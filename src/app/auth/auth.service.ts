@@ -13,6 +13,7 @@ export class AuthService {
   //to be able to let component interested to know about the status of the user
   //boolean as we only want to know login or not
   private isAuthenticated = false;
+  private tokenTimer: any;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -38,11 +39,13 @@ export class AuthService {
 
   login(email: string, password: string){
     const authData: AuthData = {email: email, password: password};
-    this.http.post<{token: string}>("http://localhost:3000/api/users/login", authData)
+    this.http.post<{token: string, expiresIn: number}>("http://localhost:3000/api/users/login", authData)
       .subscribe(response=>{
         const token = response.token; //send as json from backend from user routes
         this.token = token;
         if(token){ //checking validity of token
+          const expiresSession = response.expiresIn;
+          this.tokenTimer = setTimeout(() =>{this.logout();}, expiresSession * 1000)
           this.isAuthenticated = true;
           this.authStatusListener.next(true); //to pass info that the user is authenticated
           this.router.navigate(['/']);
@@ -55,5 +58,6 @@ export class AuthService {
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
     this.router.navigate(['/']);
+    clearTimeout(this.tokenTimer); //will clear timer one logout, either manually or automatically
   }
 }
