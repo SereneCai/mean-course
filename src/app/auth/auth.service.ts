@@ -45,7 +45,7 @@ export class AuthService {
         this.token = token;
         if(token){ //checking validity of token
           const expiresSession = response.expiresIn;
-          this.tokenTimer = setTimeout(() =>{this.logout();}, expiresSession * 1000)
+          this.setAuthTimer(expiresSession);
           this.isAuthenticated = true;
           this.authStatusListener.next(true); //to pass info that the user is authenticated
           const now = new Date();
@@ -60,10 +60,11 @@ export class AuthService {
   autoAuthUser(){
     const authInfo = this.getAuthData();
     const now = new Date();
-    const isFuture = authInfo.expiration > now;
-    if(isFuture){
+    const expiresIn = authInfo.expiration.getTime() - now.getTime();
+    if(expiresIn > 0){
       this.token = authInfo.token;
       this.isAuthenticated = true;
+      this.setAuthTimer((expiresIn / 1000));
       this.authStatusListener.next(true);
     }
 
@@ -76,6 +77,11 @@ export class AuthService {
     clearTimeout(this.tokenTimer); //will clear timer one logout, either manually or automatically
     this.clearAuth();
     this.router.navigate(['/']);
+  }
+
+  private setAuthTimer(duration: number){
+    console.log(duration);
+    this.tokenTimer = setTimeout(() =>{this.logout();}, duration * 1000)
   }
 
   private saveAuth(token: string, expirationDate: Date){
@@ -92,7 +98,7 @@ export class AuthService {
     const token = localStorage.getItem("token");
     const expiration = localStorage.getItem("expiration");
     if(!token || !expiration){
-      return;
+
     }
     return {
       token: token,
