@@ -57,6 +57,18 @@ export class AuthService {
       })
   }
 
+  autoAuthUser(){
+    const authInfo = this.getAuthData();
+    const now = new Date();
+    const isFuture = authInfo.expiration > now;
+    if(isFuture){
+      this.token = authInfo.token;
+      this.isAuthenticated = true;
+      this.authStatusListener.next(true);
+    }
+
+  }
+
   logout(){
     this.token = null;
     this.isAuthenticated = false;
@@ -74,5 +86,18 @@ export class AuthService {
   private clearAuth(){
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
+  }
+
+  private getAuthData(){
+    const token = localStorage.getItem("token");
+    const expiration = localStorage.getItem("expiration");
+    if(!token || !expiration){
+      return;
+    }
+    return {
+      token: token,
+      expiration: new Date(expiration)
+    }
+
   }
 }
