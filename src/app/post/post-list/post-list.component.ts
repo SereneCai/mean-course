@@ -22,7 +22,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   currentPage = 1; //initial value of the current page
   isLoading= false;
   private authStatusSubs: Subscription;
-  userIsAuthenticated = false;
+  userAuthenticated = false;
 
   constructor(public postsService: PostsService, private authService: AuthService) { }
 
@@ -38,7 +38,7 @@ export class PostListComponent implements OnInit, OnDestroy {
       });
     this.authStatusSubs =this.authService.getAuthStatusListener()
       .subscribe(isAuthenticated =>{
-          this.userIsAuthenticated = isAuthenticated;
+          this.userAuthenticated = isAuthenticated;
       })
   }
 
