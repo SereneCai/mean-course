@@ -65,7 +65,7 @@ export class PostsService {
   }
 
   getOnePost(id: string){
-      return this.http.get<{_id: string, title: string, content: string, imagePath: string}>
+      return this.http.get<{_id: string, title: string, content: string, imagePath: string, creator: string}>
       ('http://localhost:3000/api/posts/'+ id);
   }
 
@@ -83,7 +83,8 @@ export class PostsService {
         id: id,
         title: title,
         content: content,
-        imagePath: ""
+        imagePath: image,
+        creator: null, //to prevent user from manipulating from frontend, dont send the user id here
       };
     }
     this.http.put('http://localhost:3000/api/posts/'+ id, postData)
