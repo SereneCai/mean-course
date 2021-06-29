@@ -29,11 +29,13 @@ export class PostsService {
               content: post.content,
               id: post._id,
               imagePath: post.imagePath,
+              creator: post.creator,
             };
           }), maxPosts: postData.maxPosts
         };
       }))//pipe accepts multiple operators which we can use. eg. map, which creates a new array with the elements
       .subscribe((transformedPostsData) =>{
+        console.log(transformedPostsData);
         this.posts = transformedPostsData.posts; //setting the posts to postData, which is from the backend
         this.postsUpdated.next({posts: [...this.posts], postCount: transformedPostsData.maxPosts}); //passing the data into postsUpdated
     });
