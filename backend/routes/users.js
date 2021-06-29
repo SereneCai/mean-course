@@ -54,7 +54,8 @@ router.post('/login', (req, res, next) =>{
       //for security as the token is stored at the frontend
       res.status(200).json({
         token: token,
-        expiresIn: 3600
+        expiresIn: 3600,
+        userId: fetchedUser._id
       }); //requires no return statement as there is no code after this block if its a successful execution
     })
     .catch(err =>{
