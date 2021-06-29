@@ -98,12 +98,17 @@ router.put('/:id', checkAuth, multer({storage: storage}).single("image"), (req, 
     title: req.body.title,
     content: req.body.content,
   })
-  Post.updateOne({_id : req.params.id}, post)
+  Post.updateOne({_id : req.params.id, creator: req.userData.userId }, post)
     .then(result =>{
-      console.log(result);
-      res.status(200).json({
-        message: "successful update",
-      })
+      if(result.nModified > 0){
+        res.status(200).json({
+          message: "successful update",
+        })
+      } else{
+        res.status(401).json({
+          message: "The update is not successful",
+        })
+      }
     })
 });
 
