@@ -89,23 +89,26 @@ export class AuthService {
     this.router.navigate(['/']);
   }
 
+  //function for token timer expiration
   private setAuthTimer(duration: number){
-    console.log(duration);
     this.tokenTimer = setTimeout(() =>{this.logout();}, duration * 1000)
   }
 
+  //save all at login
   private saveAuth(token: string, expirationDate: Date, userId: string){
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
     localStorage.setItem('userId', userId);
   }
 
+  //clear everything at logout
   private clearAuth(){
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
     localStorage.removeItem('userId');
   }
 
+  //for determination of whether the user's session is still valid at autoAuth function by checking the local storage
   private getAuthData(){
     const token = localStorage.getItem("token");
     const expiration = localStorage.getItem('expiration');
@@ -118,6 +121,5 @@ export class AuthService {
       expiration: new Date(expiration),
       userId: userId
     }
-
   }
 }
