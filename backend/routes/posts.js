@@ -35,6 +35,7 @@ router.post("", checkAuth, multer({storage: storage}).single("image"), (req, res
     title:  req.body.title, //function of body parser
     content: req.body.content,
     imagePath: url + '/images/' + req.file.filename, //the url path for image. file is a multer property
+    creator: req.userData.userId,
   });
   post.save()
     .then((result)=>{
