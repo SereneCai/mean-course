@@ -23,6 +23,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   isLoading= false;
   private authStatusSubs: Subscription;
   userAuthenticated = false;
+  userId: string;
 
   constructor(public postsService: PostsService, private authService: AuthService) { }
 
@@ -30,6 +31,7 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.postsService.getPosts(this.postsPerPage, this.currentPage); //if post already exist, fetch the initial post from backend
     //send postsPerPage, and 1 as the currentPage for argument
+    this.userId = this.authService.getUserId();
     this.postsSub = this.postsService.getPostUpdate() //set a listener/subscriber to the subject/subscription; changes to posts
       .subscribe((postData:{ posts: Post[], postCount: number}) =>{
         this.isLoading =false;
@@ -42,6 +44,7 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.authStatusSubs =this.authService.getAuthStatusListener()
       .subscribe(isAuthenticated =>{
           this.userAuthenticated = isAuthenticated;
+          this.userId = this.authService.getUserId();
       })
   }
 
