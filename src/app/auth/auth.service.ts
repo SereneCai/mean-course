@@ -61,7 +61,9 @@ export class AuthService {
           this.saveAuth(token, expiration, this.userId);
           this.router.navigate(['/']);
         }
-      })
+      }, error => {
+      this.authStatusListener.next(false);
+    })
   }
 
   autoAuthUser(){
