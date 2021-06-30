@@ -48,7 +48,12 @@ router.post("", checkAuth, multer({storage: storage}).single("image"), (req, res
           imagePath: result.imagePath,
        }
       })
-    });
+    })
+    .catch(error=>{
+      res.status(500).json({
+        message: "Failed to create post."
+      })
+    })
 });
 
 router.get('', (req, res, next) => {
@@ -76,7 +81,12 @@ router.get('', (req, res, next) => {
         posts: fetchedPosts,
         maxPosts: count //the number of total post in db
       });
-    });
+    })
+    .catch(error=>{
+      res.status(500).json({
+        message: "Failed to fetch posts."
+      })
+    })
 });
 
 router.get('/:id', (req, res, next)=>{
@@ -86,9 +96,14 @@ router.get('/:id', (req, res, next)=>{
         res.status(200).json(post);
       }else{
         res.status(404).json({
-          message: "not found",
+          message: "Post not found",
         });
       }
+    })
+    .catch(error=>{
+      res.status(500).json({
+        message: "Failed to fetch post."
+      })
     })
 })
 
@@ -118,6 +133,11 @@ router.put('/:id', checkAuth, multer({storage: storage}).single("image"), (req, 
         })
       }
     })
+    .catch(error=>{
+      res.status(500).json({
+        message: "An error had occured! Post fails to update."
+      })
+    })
 });
 
 router.delete('/:id',checkAuth, (req, res, next) => {
@@ -133,6 +153,11 @@ router.delete('/:id',checkAuth, (req, res, next) => {
           message: "The delete is not successful",
         })
       }
+    })
+    .catch(error=>{
+      res.status(500).json({
+        message: "Failed to delete post."
+      })
     })
 });
 
