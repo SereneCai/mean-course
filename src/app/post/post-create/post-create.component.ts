@@ -28,7 +28,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe(authStatus=>{
       this.isLoading = false;
-    })
+    }); //listen to authlistener for condition changes
     this.form = new FormGroup({
       'title' : new FormControl(null,
         {validators: [Validators.required, Validators.minLength(3)]},),
