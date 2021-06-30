@@ -10,7 +10,7 @@ export class ErrorInterceptor implements HttpInterceptor{
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         console.log(error);
-        alert(error.error.message);
+        alert(error.error.error.message); //due to mongoose adding 1 more error within
         return throwError(error);
       })
     );
