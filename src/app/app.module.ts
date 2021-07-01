@@ -42,12 +42,12 @@ import { ErrorComponent } from './error/error.component';
     FormsModule, //unlocked template driven approach
     ReactiveFormsModule, //unlocks the reactive driven form approach
     BrowserAnimationsModule,
+    HttpClientModule,
     MatInputModule,
     MatCardModule,
     MatButtonModule,
     MatToolbarModule,
     MatExpansionModule,
-    HttpClientModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatDialogModule,
