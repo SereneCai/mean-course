@@ -17,8 +17,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Live Preview
 
-The application have been deployed on AWS. Click [here] to have a look!
-(http://nodeangular-env.eba-r2jxwpmj.us-east-2.elasticbeanstalk.com)
+The application have been deployed on AWS. Click [here](http://nodeangular-env.eba-r2jxwpmj.us-east-2.elasticbeanstalk.com)to have a look!
 
 ## Development server
 
