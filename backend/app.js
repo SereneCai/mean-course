@@ -17,7 +17,7 @@ mongoose.connect("mongodb+srv://user_1:"+ process.env.MONGO_ATLAS_PW + "@blogtes
 
 app.use(bodyParser.json()); //return a valid middleware to parse json data
 app.use(bodyParser.urlencoded({extended: false}));
-app.use("/images", express.static(path.join(__dirname, "images"))); //giving allowance, and pointing using path property from express
+app.use("/images", express.static(path.join("backend/images"))); //giving allowance, and pointing using path property from express
 app.use("/", express.static(path.join(__dirname, "angular")));
 
 app.use((req, res, next) =>{
