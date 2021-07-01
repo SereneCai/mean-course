@@ -17,7 +17,8 @@ mongoose.connect("mongodb+srv://user_1:"+ process.env.MONGO_ATLAS_PW + "@blogtes
 
 app.use(bodyParser.json()); //return a valid middleware to parse json data
 app.use(bodyParser.urlencoded({extended: false}));
-app.use("/images", express.static(path.join("backend/images"))); //giving allowance, and pointing using path property from express
+app.use("/images", express.static(path.join(__dirname, "backend/images"))); //giving allowance, and pointing using path property from express
+app.use("/", express.static(path.join(__dirname, "angular")));
 
 app.use((req, res, next) =>{
   //to allow cross server sharing of info, the following headers are added
@@ -28,7 +29,11 @@ app.use((req, res, next) =>{
   next();
 })
 
-app.use('/api/posts', PostRoutes);
+app.use('/api/posts', PostRoutes); //nvr use a url same as backend for angular
 app.use('/api/users', UserRoutes);
+//to forward any path that's not targetting api routes
+app.use((req,res,next)=>{
+  res.sendFile(path.join(__dirname, "angular", "index.html"));
+});
 
 module.exports = app;
