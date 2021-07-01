@@ -35,7 +35,6 @@ export class PostsService {
         };
       }))//pipe accepts multiple operators which we can use. eg. map, which creates a new array with the elements
       .subscribe((transformedPostsData) =>{
-        console.log(transformedPostsData);
         this.posts = transformedPostsData.posts; //setting the posts to postData, which is from the backend
         this.postsUpdated.next({posts: [...this.posts], postCount: transformedPostsData.maxPosts}); //passing the data into postsUpdated
     });
@@ -72,8 +71,9 @@ export class PostsService {
   //to update when there are changes to the posts, dynamically
   updatePost(id: string, title: string, content: string, image: File | string){
     let postData: Post | FormData;
-    if(typeof(image) === 'object'){
+    if(typeof image === 'object'){
       postData = new FormData();
+      postData.append("id", id);
       postData.append('title', title);
       postData.append('content', content);
       postData.append('image', image, title);
