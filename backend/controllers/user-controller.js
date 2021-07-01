@@ -45,7 +45,7 @@ exports.userLogin = (req, res, next) =>{
       }
       //will be executed once the password matches
       const token = jwt.sign({email: fetchedUser.email, userId: fetchedUser._id},
-        'secret_should_be_longer',
+        process.env.JWT_KEY,
         {expiresIn: "1h"});
       //js object{info from db} which will be used to generate the jwt, secret key/password to create the hash
       // (optional)expiresIn determines how long the token will last
