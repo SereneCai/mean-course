@@ -4,6 +4,9 @@ import {Post} from "../post.model";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {Router} from "@angular/router";
+import {environment} from "../../../environments/environment";
+
+const BACKEND_URL= environment.apiUrl + '/posts';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +23,7 @@ export class PostsService {
     //subscribe to the posts
     const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
     this.http
-      .get<{message: string, posts: any, maxPosts: number}>('http://localhost:3000/api/posts' + queryParams) //not posts:Post[] because id is wrong
+      .get<{message: string, posts: any, maxPosts: number}>(BACKEND_URL + queryParams) //not posts:Post[] because id is wrong
       .pipe(map((postData) =>{
         return {
           posts: postData.posts.map(post => {
@@ -46,7 +49,7 @@ export class PostsService {
     postData.append("content", content);
     postData.append("image", image, title ); //3rd arg is the file name provided to the backend
     this.http
-      .post<{message: string, post: Post}>('http://localhost:3000/api/posts', postData)
+      .post<{message: string, post: Post}>(BACKEND_URL, postData)
       //post as 2nd argument, which the data we want to pass
       .subscribe((responseData) =>{
         this.router.navigate(['/']);
@@ -60,12 +63,12 @@ export class PostsService {
   }
 
   deletePost(postId: string){
-    return this.http.delete('http://localhost:3000/api/posts/'+ postId)
+    return this.http.delete(BACKEND_URL + postId)
   }
 
   getOnePost(id: string){
       return this.http.get<{_id: string, title: string, content: string, imagePath: string, creator: string}>
-      ('http://localhost:3000/api/posts/'+ id);
+      (BACKEND_URL + id);
   }
 
   //to update when there are changes to the posts, dynamically
@@ -87,7 +90,7 @@ export class PostsService {
         creator: null, //to prevent user from manipulating from frontend, dont send the user id here
       };
     }
-    this.http.put('http://localhost:3000/api/posts/'+ id, postData)
+    this.http.put(BACKEND_URL+ id, postData)
       .subscribe((response)=>{
         this.router.navigate(['/']);
       }); //this.router.navigate([]); --> [] used because we need to pass an array of segments
