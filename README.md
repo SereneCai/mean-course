@@ -15,6 +15,11 @@ Features:
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.4.
 
+## Live Preview
+
+The application have been deployed on AWS. Click [here] to have a look!
+(http://nodeangular-env.eba-r2jxwpmj.us-east-2.elasticbeanstalk.com)
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
