@@ -90,11 +90,10 @@ exports.updatePost = (req, res, next) =>{
     content: req.body.content,
     imagePath: imagePath,
     creator: req.userData.userId,
-  })
+  });
   Post.updateOne({_id : req.params.id, creator: req.userData.userId }, post)
     .then(result =>{
-      //uses nModified -- print console.log(result) if unclear
-      if(result.nModified > 0){
+      if(result.n > 0){
         res.status(200).json({
           message: "successful update",
         })
@@ -108,7 +107,7 @@ exports.updatePost = (req, res, next) =>{
       res.status(500).json({
         message: "An error had occured! Post fails to update."
       })
-    })
+    });
 };
 
 exports.deletePost = (req, res, next) => {
