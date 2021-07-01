@@ -10,8 +10,6 @@ const routes: Routes = [
   {path:'', component: PostListComponent},
   {path: 'create', component: PostCreateComponent, canActivate: [AuthGuard]},
   {path: 'edit/:postId', component: PostCreateComponent, canActivate: [AuthGuard]}, //setting it to dynamically change later
-  {path:'login', component: LoginComponent},
-  {path:'signup', component: SignupComponent},
 ];
 
 @NgModule({
@@ -19,4 +17,5 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [AuthGuard]
 })
+
 export class AppRoutingModule { }
