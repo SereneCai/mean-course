@@ -10,6 +10,7 @@ const routes: Routes = [
   {path:'', component: PostListComponent},
   {path: 'create', component: PostCreateComponent, canActivate: [AuthGuard]},
   {path: 'edit/:postId', component: PostCreateComponent, canActivate: [AuthGuard]}, //setting it to dynamically change later
+  {path:"auth", loadChildren: ()=> import('./auth/auth.module').then(m => m.AuthModule)} //for lazy loading- load code only when needed
 ];
 
 @NgModule({
