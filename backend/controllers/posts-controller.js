@@ -34,7 +34,8 @@ exports.fetchAllPosts = (req, res, next) => {
   let fetchedPosts;
   if(pageSize && currentPage){
     postQuery
-      .skip(pageSize * (currentPage - 1)) //will not retrieve all data. the formula is for skipping items from previus page
+      .skip(pageSize * (currentPage - 1)) //will not retrieve all data. the formula is for skipping items from previuos page
+      //e.g. page 1 --> 2 (pagesize) *(1-1) =0, so 1st page needs not to skip
       .limit(pageSize); // limit how many items it returns
     //still execute query on all elements of db
     //this could be inefficient if the the db is huge

@@ -25,6 +25,7 @@ export class PostsService {
     this.http
       .get<{message: string, posts: any, maxPosts: number}>(BACKEND_URL + queryParams) //not posts:Post[] because id is wrong
       .pipe(map((postData) =>{
+        console.log(queryParams);
         return {
           posts: postData.posts.map(post => {
             return {
