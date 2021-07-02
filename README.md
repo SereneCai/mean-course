@@ -1,8 +1,9 @@
 # MeanCourse
 
-A learning journey where a functional blog will be created.
+A learning journey where a functional blog will be created using MEAN (MongoDB, Express, AngularJS and NodeJS).
 
 Features:
+
 - Creation of new post
   - Title
   - Content
@@ -11,13 +12,14 @@ Features:
 - Editing posts
 - Deleting unwanted posts
 - Paginator
-- User authentication
+- User Signup, Login and Logout features
+- User authentication (JWT)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.4.
 
 ## Live Preview
 
-The application have been deployed on AWS. Click [here](http://nodeangular-env.eba-r2jxwpmj.us-east-2.elasticbeanstalk.com)to have a look!
+The application have been deployed on AWS. Click [here](http://nodeangular-env.eba-r2jxwpmj.us-east-2.elasticbeanstalk.com) to have a look!
 
 ## Development server
 
